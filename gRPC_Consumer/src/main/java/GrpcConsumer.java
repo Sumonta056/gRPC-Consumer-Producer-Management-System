@@ -47,15 +47,8 @@ public class GrpcConsumer {
             User.APIRes apiRes = userStub.login(request);
             logger.info(apiRes.getResCode() + "\n" + apiRes.getMessage());
         } else if (choice == 2) {
-            // User chose registration
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
-
-            System.out.print("Enter your password: ");
-            String password = scanner.nextLine();
-
-            System.out.print("Enter your name: ");
-            String name = scanner.nextLine();
 
             System.out.print("Enter your email: ");
             String email = scanner.nextLine();
@@ -63,11 +56,13 @@ public class GrpcConsumer {
             System.out.print("Enter your bio: ");
             String bio = scanner.nextLine();
 
+            System.out.print("Enter your password: ");
+            String password = scanner.nextLine();
+
             // Build the gRPC request for registration
             User.RegisterReq registerReq = User.RegisterReq.newBuilder()
                     .setUsername(username)
                     .setPassword(password)
-                    .setName(name)
                     .setEmail(email)
                     .setBio(bio)
                     .build();
