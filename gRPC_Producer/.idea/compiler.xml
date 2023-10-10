@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gRPC_server_demo" />
+        <module name="gRPC_Producer" />
       </profile>
     </annotationProcessing>
   </component>
