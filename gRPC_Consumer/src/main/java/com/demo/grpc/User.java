@@ -4795,6 +4795,16 @@ public final class User {
      */
     com.google.protobuf.ByteString
         getBioBytes();
+
+    /**
+     * <code>string password = 4;</code>
+     */
+    java.lang.String getPassword();
+    /**
+     * <code>string password = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getPasswordBytes();
   }
   /**
    * <pre>
@@ -4816,6 +4826,7 @@ public final class User {
       username_ = "";
       email_ = "";
       bio_ = "";
+      password_ = "";
     }
 
     @java.lang.Override
@@ -4858,6 +4869,12 @@ public final class User {
               java.lang.String s = input.readStringRequireUtf8();
 
               bio_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              password_ = s;
               break;
             }
             default: {
@@ -4994,6 +5011,40 @@ public final class User {
       }
     }
 
+    public static final int PASSWORD_FIELD_NUMBER = 4;
+    private volatile java.lang.Object password_;
+    /**
+     * <code>string password = 4;</code>
+     */
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        password_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string password = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -5017,6 +5068,9 @@ public final class User {
       if (!getBioBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, bio_);
       }
+      if (!getPasswordBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, password_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5034,6 +5088,9 @@ public final class User {
       }
       if (!getBioBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, bio_);
+      }
+      if (!getPasswordBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, password_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5057,6 +5114,8 @@ public final class User {
           .equals(other.getEmail());
       result = result && getBio()
           .equals(other.getBio());
+      result = result && getPassword()
+          .equals(other.getPassword());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -5074,6 +5133,8 @@ public final class User {
       hash = (53 * hash) + getEmail().hashCode();
       hash = (37 * hash) + BIO_FIELD_NUMBER;
       hash = (53 * hash) + getBio().hashCode();
+      hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
+      hash = (53 * hash) + getPassword().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5217,6 +5278,8 @@ public final class User {
 
         bio_ = "";
 
+        password_ = "";
+
         return this;
       }
 
@@ -5246,6 +5309,7 @@ public final class User {
         result.username_ = username_;
         result.email_ = email_;
         result.bio_ = bio_;
+        result.password_ = password_;
         onBuilt();
         return result;
       }
@@ -5304,6 +5368,10 @@ public final class User {
         }
         if (!other.getBio().isEmpty()) {
           bio_ = other.bio_;
+          onChanged();
+        }
+        if (!other.getPassword().isEmpty()) {
+          password_ = other.password_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -5541,6 +5609,75 @@ public final class User {
         onChanged();
         return this;
       }
+
+      private java.lang.Object password_ = "";
+      /**
+       * <code>string password = 4;</code>
+       */
+      public java.lang.String getPassword() {
+        java.lang.Object ref = password_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          password_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string password = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPasswordBytes() {
+        java.lang.Object ref = password_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          password_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string password = 4;</code>
+       */
+      public Builder setPassword(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        password_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string password = 4;</code>
+       */
+      public Builder clearPassword() {
+        
+        password_ = getDefaultInstance().getPassword();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string password = 4;</code>
+       */
+      public Builder setPasswordBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        password_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5647,13 +5784,14 @@ public final class User {
       "\n\005email\030\002 \001(\t\022\013\n\003bio\030\003 \001(\t\022\020\n\010password\030\004" +
       " \001(\t\"L\n\nProfileRes\022\020\n\010username\030\001 \001(\t\022\r\n\005" +
       "email\030\002 \001(\t\022\013\n\003bio\030\003 \001(\t\022\020\n\010password\030\004 \001" +
-      "(\t\"@\n\020UpdateProfileReq\022\020\n\010username\030\001 \001(\t" +
-      "\022\r\n\005email\030\002 \001(\t\022\013\n\003bio\030\003 \001(\t2\266\001\n\004user\022\033\n" +
-      "\005login\022\t.LoginReq\032\007.APIRes\022\031\n\006logout\022\006.E" +
-      "mpty\032\007.APIRes\022!\n\010register\022\014.RegisterReq\032" +
-      "\007.APIRes\022&\n\ngetProfile\022\013.ProfileReq\032\013.Pr" +
-      "ofileRes\022+\n\rupdateProfile\022\021.UpdateProfil" +
-      "eReq\032\007.APIResB\017\n\rcom.demo.grpcb\006proto3"
+      "(\t\"R\n\020UpdateProfileReq\022\020\n\010username\030\001 \001(\t" +
+      "\022\r\n\005email\030\002 \001(\t\022\013\n\003bio\030\003 \001(\t\022\020\n\010password" +
+      "\030\004 \001(\t2\266\001\n\004user\022\033\n\005login\022\t.LoginReq\032\007.AP" +
+      "IRes\022\031\n\006logout\022\006.Empty\032\007.APIRes\022!\n\010regis" +
+      "ter\022\014.RegisterReq\032\007.APIRes\022&\n\ngetProfile" +
+      "\022\013.ProfileReq\032\013.ProfileRes\022+\n\rupdateProf" +
+      "ile\022\021.UpdateProfileReq\032\007.APIResB\017\n\rcom.d" +
+      "emo.grpcb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5708,7 +5846,7 @@ public final class User {
     internal_static_UpdateProfileReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UpdateProfileReq_descriptor,
-        new java.lang.String[] { "Username", "Email", "Bio", });
+        new java.lang.String[] { "Username", "Email", "Bio", "Password", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

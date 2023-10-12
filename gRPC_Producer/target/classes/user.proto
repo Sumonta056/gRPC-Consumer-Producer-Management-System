@@ -52,4 +52,5 @@ message UpdateProfileReq {
   string username = 1;
   string email = 2;
   string bio = 3;
+  string password = 4;
 }

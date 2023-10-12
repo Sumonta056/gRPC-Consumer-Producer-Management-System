@@ -86,6 +86,7 @@ public class GrpcConsumer {
                             .setUsername(username)
                             .setEmail(newEmail)
                             .setBio(newBio)
+                            .setPassword(newPassword)
                             .build();
 
                     User.APIRes updateRes = userStub.updateProfile(updateProfileReq);

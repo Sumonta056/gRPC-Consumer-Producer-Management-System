@@ -149,18 +149,53 @@ public class UserService extends userGrpc.userImplBase {
         String username = request.getUsername();
         String newEmail = request.getEmail();
         String newBio = request.getBio();
+        String newPassword = request.getPassword();
+
+
+        String salt = BCrypt.gensalt();
+        String password = BCrypt.hashpw(newPassword, salt);
 
         // Update the user's profile in the database based on the provided data
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            String updateQuery = "UPDATE users SET password = ?, email = ?, bio = ? WHERE username = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, password);
+                preparedStatement.setString(2, newEmail);
+                preparedStatement.setString(3, newBio);
+                preparedStatement.setString(4, username);
 
-        // Check if the profile update was successful and send an appropriate response
-        User.APIRes updateResponse = User.APIRes.newBuilder()
-                .setResCode(200)
-                .setMessage("Profile updated successfully")
-                .build();
 
-        responseObserver.onNext(updateResponse);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Profile update successful
+                    User.APIRes updateResponse = User.APIRes.newBuilder()
+                            .setResCode(200)
+                            .setMessage("Profile updated successfully")
+                            .build();
+                    responseObserver.onNext(updateResponse);
+                    logger.info("Profile update successful for user: " + username);
+                } else {
+                    // Profile update failed (user not found)
+                    User.APIRes updateResponse = User.APIRes.newBuilder()
+                            .setResCode(404)  // You can choose an appropriate error code
+                            .setMessage("User not found or profile update failed")
+                            .build();
+                    responseObserver.onNext(updateResponse);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the database error
+            User.APIRes updateResponse = User.APIRes.newBuilder()
+                    .setResCode(500)  // Internal server error
+                    .setMessage("Internal server error")
+                    .build();
+            responseObserver.onNext(updateResponse);
+        }
+
         responseObserver.onCompleted();
     }
+
 
 }
 
