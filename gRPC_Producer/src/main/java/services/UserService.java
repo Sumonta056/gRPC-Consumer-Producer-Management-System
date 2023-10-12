@@ -105,4 +105,63 @@ public class UserService extends userGrpc.userImplBase {
 
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getProfile(User.ProfileReq request, StreamObserver<User.ProfileRes> responseObserver) {
+        String username = request.getUsername();
+        String email = "";
+        String bio = "";
+
+        logger.info("Getting Data and Showing User Profile");
+
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            String selectQuery = "SELECT email, bio FROM users WHERE username = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, username);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        email = resultSet.getString("email");
+                        bio = resultSet.getString("bio");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the database error here
+            responseObserver.onError(Status.INTERNAL.withDescription("Internal server error").asRuntimeException());
+            return;
+        }
+
+        // Construct a ProfileRes message with the user's profile data
+        User.ProfileRes profileRes = User.ProfileRes.newBuilder()
+                .setUsername(username)
+                .setEmail(email)
+                .setBio(bio)
+                .build();
+
+        responseObserver.onNext(profileRes);
+        responseObserver.onCompleted();
+    }
+
+
+    @Override
+    public void updateProfile(User.UpdateProfileReq request, StreamObserver<User.APIRes> responseObserver) {
+        String username = request.getUsername();
+        String newEmail = request.getEmail();
+        String newBio = request.getBio();
+
+        // Update the user's profile in the database based on the provided data
+
+        // Check if the profile update was successful and send an appropriate response
+        User.APIRes updateResponse = User.APIRes.newBuilder()
+                .setResCode(200)
+                .setMessage("Profile updated successfully")
+                .build();
+
+        responseObserver.onNext(updateResponse);
+        responseObserver.onCompleted();
+    }
+
 }
+
+

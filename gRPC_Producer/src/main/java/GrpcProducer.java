@@ -18,6 +18,6 @@ public class GrpcProducer {
         server.start();
 
         logger.info("Server started at port : " + server.getPort());
-          server.awaitTermination(200, TimeUnit.SECONDS);
+          server.awaitTermination(1000, TimeUnit.SECONDS);
     }
 }

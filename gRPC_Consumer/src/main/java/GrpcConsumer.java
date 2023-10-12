@@ -46,6 +46,57 @@ public class GrpcConsumer {
             // Send the login request to the server
             User.APIRes apiRes = userStub.login(request);
             logger.info(apiRes.getResCode() + "\n" + apiRes.getMessage());
+            // Assuming login was successful
+            boolean loggedIn;
+            if(apiRes.getMessage().equals("SUCCESS")) loggedIn = true;
+            else loggedIn = false;
+
+            while (loggedIn) {
+                System.out.println("-------------------------------------");
+                System.out.println("Choose an option:");
+                System.out.println("1. Show Profile");
+                System.out.println("2. Update Profile");
+                System.out.println("3. Exit");
+                System.out.print("Enter your choice (1, 2, or 3): ");
+                int option = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                if (option == 1) {
+                    // Show User Profile
+                    User.ProfileReq profileReq = User.ProfileReq.newBuilder()
+                            .setUsername(username)
+                            .build();
+                    User.ProfileRes profileRes = userStub.getProfile(profileReq);
+                    System.out.println("-------------------------------------");
+                    System.out.println("User Profile:");
+                    System.out.println("Username: " + profileRes.getUsername());
+                    System.out.println("Email: " + profileRes.getEmail());
+                    System.out.println("Bio: " + profileRes.getBio());
+                    System.out.println("-------------------------------------");
+                } else if (option == 2) {
+                    // Update Profile
+                    System.out.print("Enter your new email: ");
+                    String newEmail = scanner.nextLine();
+                    System.out.print("Enter your new bio: ");
+                    String newBio = scanner.nextLine();
+                    System.out.print("Enter your new password: ");
+                    String newPassword = scanner.nextLine();
+
+                    User.UpdateProfileReq updateProfileReq = User.UpdateProfileReq.newBuilder()
+                            .setUsername(username)
+                            .setEmail(newEmail)
+                            .setBio(newBio)
+                            .build();
+
+                    User.APIRes updateRes = userStub.updateProfile(updateProfileReq);
+                    System.out.println("Profile update response: " + updateRes.getMessage());
+                } else if (option == 3) {
+                    // Exit the program
+                    loggedIn = false;
+                } else {
+                    System.out.println("Invalid choice.");
+                }
+            }
         } else if (choice == 2) {
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
@@ -70,6 +121,9 @@ public class GrpcConsumer {
             // Send the registration request to the server
             User.APIRes apiRes = userStub.register(registerReq);
             logger.info(apiRes.getResCode() + "\n" + apiRes.getMessage());
+
+
+
         } else {
             System.out.println("Invalid choice.");
         }
